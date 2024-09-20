@@ -1,7 +1,3 @@
-package org.chiper.kriptografi;
-
-import java.util.Arrays;
-
 public class CipherUtils {
 
     // Vigenere Cipher
@@ -167,7 +163,7 @@ public class CipherUtils {
         int[][] matrix = createMatrix(key);
         int[][] inverseMatrix = inverseMatrix(matrix, 4);
         StringBuilder decrypted = new StringBuilder();
-
+    
         for (int i = 0; i < message.length(); i += 4) {
             int[] vector = new int[4];
             for (int j = 0; j < 4; j++) {
@@ -178,8 +174,14 @@ public class CipherUtils {
                 decrypted.append((char) ((value % 26 + 26) % 26 + 'A'));
             }
         }
+        
+        // Menghapus padding 'X' yang mungkin ada di akhir pesan
+        while (decrypted.charAt(decrypted.length() - 1) == 'X') {
+            decrypted.deleteCharAt(decrypted.length() - 1);
+        }
+        
         return decrypted.toString();
-    }
+    }    
 
     private static int[] multiplyMatrixByVector(int[][] matrix, int[] vector) {
         int[] result = new int[4];
@@ -205,8 +207,8 @@ public class CipherUtils {
         int modDet = ((det % 26) + 26) % 26;
         int invDet = modInverse(modDet, 26);
         if (invDet == -1) {
-            throw new IllegalArgumentException("Matriks tidak memiliki invers modulo 26");
-        }
+            throw new IllegalArgumentException("Matriks tidak memiliki invers modulo 26. Pilih kunci lain.");
+        }        
         int[][] adj = adjoint(matrix, n);
         int[][] inv = new int[n][n];
 

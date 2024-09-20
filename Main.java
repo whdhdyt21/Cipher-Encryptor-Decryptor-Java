@@ -1,5 +1,3 @@
-package org.chiper.kriptografi;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,22 +10,18 @@ import java.io.IOException;
 class CipherAppSwing {
     public static void main(String[] args) {
         // Membuat JFrame
-        JFrame frame = new JFrame("Cipher Encryptor/Decryptor");
-        frame.setSize(400, 400); // Lebar lebih ramping
+        JFrame frame = new JFrame("Cipher Encryptor Decryptor Java"); 
+        frame.setSize(1512, 982);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Mengatur layout untuk frame
+        frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
-        // Membuat Panel
+        // Membuat Panel Utama
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         frame.add(panel, BorderLayout.CENTER);
-
-        // Menambahkan komponen ke panel
         placeComponents(panel);
-
-        // Menampilkan frame
+        panel.setBackground(Color.black);
         frame.setVisible(true);
     }
 
@@ -37,83 +31,105 @@ class CipherAppSwing {
         constraints.insets = new Insets(10, 10, 10, 10); // Padding
 
         // Judul
-        JLabel titleLabel = new JLabel("Cipher Encryptor/Decryptor");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        JLabel titleLabel = new JLabel("Cipher Encryptor Decryptor Java");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        titleLabel.setForeground(Color.RED);
         constraints.gridx = 0;
         constraints.gridy = 0;
-        constraints.gridwidth = 2;
+        constraints.gridwidth = 3;
+        constraints.anchor = GridBagConstraints.CENTER;
         panel.add(titleLabel, constraints);
+
+        // Separator
+        JSeparator separator = new JSeparator();
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 3;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(separator, constraints);
 
         // Label untuk input pesan
         JLabel messageLabel = new JLabel("Message:");
         constraints.gridwidth = 1;
         constraints.gridx = 0;
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         panel.add(messageLabel, constraints);
+        messageLabel.setForeground(Color.RED);
 
         // Text field untuk input pesan
-        JTextField messageText = new JTextField(15); // Ukuran lebih kecil
+        JTextField messageText = new JTextField(15);
         constraints.gridx = 1;
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         panel.add(messageText, constraints);
+        messageText.setForeground(Color.RED);
 
         // Tombol untuk mengunggah file .txt
         JButton uploadButton = new JButton("Upload .txt File");
         constraints.gridx = 2;
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         panel.add(uploadButton, constraints);
+        uploadButton.setForeground(Color.RED);
 
         // Label untuk input kunci
         JLabel keyLabel = new JLabel("Key (min. 12 chars):");
         constraints.gridx = 0;
-        constraints.gridy = 2;
+        constraints.gridy = 3;
         panel.add(keyLabel, constraints);
+        keyLabel.setForeground(Color.RED);
 
         // Text field untuk input kunci
-        JTextField keyText = new JTextField(15); // Ukuran lebih kecil
+        JTextField keyText = new JTextField(15);
         constraints.gridx = 1;
-        constraints.gridy = 2;
+        constraints.gridy = 3;
         panel.add(keyText, constraints);
+        keyText.setForeground(Color.RED);
 
         // ComboBox untuk memilih cipher
         JLabel cipherLabel = new JLabel("Select Cipher:");
         constraints.gridx = 0;
-        constraints.gridy = 3;
+        constraints.gridy = 4;
         panel.add(cipherLabel, constraints);
+        cipherLabel.setForeground(Color.RED);
 
-        String[] ciphers = {"Vigenere", "Playfair", "Hill"};
+        String[] ciphers = {"Vigenere Cipher", "Playfair Cipher", "Hill Cipher"};
         JComboBox<String> cipherComboBox = new JComboBox<>(ciphers);
         constraints.gridx = 1;
-        constraints.gridy = 3;
+        constraints.gridy = 4;
         panel.add(cipherComboBox, constraints);
+        cipherComboBox.setForeground(Color.RED);
 
         // Tombol untuk enkripsi
         JButton encryptButton = new JButton("Encrypt");
         constraints.gridx = 0;
-        constraints.gridy = 4;
+        constraints.gridy = 5;
         panel.add(encryptButton, constraints);
+        encryptButton.setForeground(Color.RED);
 
         // Tombol untuk dekripsi
         JButton decryptButton = new JButton("Decrypt");
         constraints.gridx = 1;
-        constraints.gridy = 4;
+        constraints.gridy = 5;
         panel.add(decryptButton, constraints);
+        decryptButton.setForeground(Color.RED);
 
         // Label untuk hasil
         JLabel resultLabel = new JLabel("Result:");
         constraints.gridx = 0;
-        constraints.gridy = 5;
+        constraints.gridy = 6;
         panel.add(resultLabel, constraints);
+        resultLabel.setForeground(Color.RED);
 
         // Text area untuk menampilkan hasil
-        JTextArea resultArea = new JTextArea(5, 15); // Ukuran lebih kecil
+        JTextArea resultArea = new JTextArea(5, 15); 
         resultArea.setLineWrap(true);
         resultArea.setWrapStyleWord(true);
+        resultArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(resultArea);
         constraints.gridx = 1;
-        constraints.gridy = 5;
+        constraints.gridy = 6;
         constraints.gridwidth = 2;
         panel.add(scrollPane, constraints);
+        resultArea.setForeground(Color.RED);
 
         // Action untuk tombol Upload
         uploadButton.addActionListener(new ActionListener() {
@@ -134,6 +150,7 @@ class CipherAppSwing {
                         ex.printStackTrace();
                     }
                 }
+                messageText.setForeground(Color.RED);
             }
         });
 
@@ -147,13 +164,13 @@ class CipherAppSwing {
                 if (key.length() >= 12) {
                     String encryptedMessage = "";
                     switch (selectedCipher) {
-                        case "Vigenere":
+                        case "Vigenere Cipher":
                             encryptedMessage = CipherUtils.vigenereEncrypt(message, key);
                             break;
-                        case "Playfair":
+                        case "Playfair Cipher":
                             encryptedMessage = CipherUtils.playfairEncrypt(message, key);
                             break;
-                        case "Hill":
+                        case "Hill Cipher":
                             encryptedMessage = CipherUtils.hillEncrypt(message, key);
                             break;
                     }
@@ -174,13 +191,13 @@ class CipherAppSwing {
                 if (key.length() >= 12) {
                     String decryptedMessage = "";
                     switch (selectedCipher) {
-                        case "Vigenere":
+                        case "Vigenere Cipher":
                             decryptedMessage = CipherUtils.vigenereDecrypt(message, key);
                             break;
-                        case "Playfair":
+                        case "Playfair Cipher":
                             decryptedMessage = CipherUtils.playfairDecrypt(message, key);
                             break;
-                        case "Hill":
+                        case "Hill Cipher":
                             decryptedMessage = CipherUtils.hillDecrypt(message, key);
                             break;
                     }
